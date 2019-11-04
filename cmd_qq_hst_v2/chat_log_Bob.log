@@ -1,0 +1,42 @@
+2019-10-09 19:43:00 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2019-10-09 19:43:01 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Miranda-lym','Bob','hello')
+2019-10-09 19:43:01 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','hi!')
+2019-10-09 19:43:01 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Miranda-lym','Bob','this a test case!')
+2019-10-09 19:43:01 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','soga,I get it!')
+2019-10-09 19:43:01 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','John','what are you doing!')
+2019-10-10 11:48:18 >>>execute: CREATE TABLE `chat_log_接受到来自127.0.0.1的连接` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2019-10-31 14:21:54 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Failed to create: Table 'chat_log_bob' already exists
+2019-10-31 14:21:54 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Miranda-lym','Bob','hello')
+2019-10-31 14:21:54 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','hi!')
+2019-10-31 14:21:54 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Miranda-lym','Bob','this a test case!')
+2019-10-31 14:21:54 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','soga,I get it!')
+2019-10-31 14:21:54 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','John','what are you doing!')
+2019-10-31 14:27:43 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Failed to create: Table 'chat_log_bob' already exists
+2019-10-31 14:27:43 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','fcbodls')
+2019-10-31 14:27:44 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Failed to create: Table 'chat_log_bob' already exists
+2019-10-31 14:27:44 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','vcbojlfd')
+2019-10-31 14:27:45 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Failed to create: Table 'chat_log_bob' already exists
+2019-10-31 14:27:45 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','vdsl')
+2019-10-31 14:27:46 >>>execute: CREATE TABLE `chat_log_Bob` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Failed to create: Table 'chat_log_bob' already exists
+2019-10-31 14:27:46 >>>execute: insert into chat_log_Bob(toUser,fromUser,msg) values('Bob','Miranda-lym','dsvcljb')
+2019-10-31 14:30:38 >>>execute: CREATE TABLE `chat_log_tong` (`id` tinyint(4) NOT NULL AUTO_INCREMENT,`toUser` varchar(20) NOT NULL,`fromUser` varchar(20) NOT NULL,`time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,`msg` text NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2019-10-31 14:30:38 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','bvckdjs')
+2019-10-31 14:30:38 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','cdlj')
+2019-10-31 14:30:39 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','cdk')
+2019-10-31 14:30:40 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','cdslk')
+2019-10-31 14:30:41 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','shima')
+2019-10-31 14:30:42 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('tong','group','shide')
+2019-10-31 21:59:05 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','hst;fkdj;')
+2019-10-31 21:59:55 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','0t;fkdj;')
+2019-10-31 22:00:29 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','0t;fkdj;')
+2019-10-31 22:02:21 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:d')
+2019-10-31 22:02:23 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:dsa')
+2019-10-31 22:02:24 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:shima')
+2019-10-31 22:02:37 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:你敢问')
+2019-10-31 22:02:42 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:测试')
+2019-10-31 22:02:44 >>>execute: insert into chat_log_tong(toUser,fromUser,msg) values('group','tong','tong:中文')
