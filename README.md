@@ -25,3 +25,33 @@
 - 输入对方用户名进行添加
 ###### emm没有写实现好友请求的...
 
+#### 数据库
+1. 基本表名：
+
+![image](https://s2.ax1x.com/2019/11/06/M9bzbd.png)
+
+其中的chat_log_user会在用户选择单聊的时候自动创建。
+user2为用户信息表。
+offline_msg存储的是离线消息的基本信息。
+friends存储了好友对的信息。
+
+2. 部分数据展示：
+聊天记录：
+
+![image](https://s2.ax1x.com/2019/11/06/M9qC5t.png)
+
+好友对：
+
+![image](https://s2.ax1x.com/2019/11/06/M9qiPP.png)
+
+历史记录：
+
+![image](https://s2.ax1x.com/2019/11/06/M9q3xU.png)
+
+用户信息：
+
+![image](https://s2.ax1x.com/2019/11/06/M9qYqJ.png)
+
+
+
+
