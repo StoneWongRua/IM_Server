@@ -1,6 +1,10 @@
+/*
+*@Discription æ¶ˆæ¯è®°å½•ç­‰æ•°æ®åº“æ“ä½œ
+*@Author tong
+*/
+
+
 #define _CRT_SECURE_NO_WARNINGS
-
-
 
 #include "Sha256.h"
 #include"ChatDBUtil.h"
@@ -13,7 +17,7 @@ DbConnector::DbConnector()
 		string err = "Failed to connect database server: " + error();
 		throw std::logic_error(err);
 	}
-	query("set names 'GBK'");//ÉèÖÃ×Ö·û¼¯,·ÀÖ¹ÖĞÎÄ³öÏÖÂÒÂë
+	query("set names 'GBK'");//è®¾ç½®å­—ç¬¦é›†,é˜²æ­¢ä¸­æ–‡å‡ºç°ä¹±ç 
 }
 
 DbConnector::~DbConnector()
@@ -21,33 +25,33 @@ DbConnector::~DbConnector()
 	mysql_close(mysql);
 }
 
-//Ö´ĞĞsqlÓï¾ä,³É¹¦Ôò·µ»Ø0,Ê§°Ü·µ»Ø·Ç0
+//æ‰§è¡Œsqlè¯­å¥,æˆåŠŸåˆ™è¿”å›0,å¤±è´¥è¿”å›é0
 int DbConnector::query(const string& sql)
 {
 	return mysql_query(mysql, sql.c_str());
 }
 
-//·µ»ØÉÏÒ»´ÎµÄ´íÎóÌáÊ¾
+//è¿”å›ä¸Šä¸€æ¬¡çš„é”™è¯¯æç¤º
 string DbConnector::error()
 {
 	return mysql_error(mysql);
 }
 
-//»ñÈ¡½á¹û¼¯,½«Æä±£´æµ½¶şÎ¬stringÊı×éÖĞ
+//è·å–ç»“æœé›†,å°†å…¶ä¿å­˜åˆ°äºŒç»´stringæ•°ç»„ä¸­
 vector<vector<string> > DbConnector::GetResult()
 {
 	vector<vector<string> >result;
 	MYSQL_RES* res = mysql_store_result(mysql);
 	if (res == NULL)
 		return result;
-	unsigned num = mysql_num_fields(res); //½á¹û¼¯µÄÁĞÊı
+	unsigned num = mysql_num_fields(res); //ç»“æœé›†çš„åˆ—æ•°
 	for (MYSQL_ROW row; (row = mysql_fetch_row(res)) != NULL;) {
 		result.push_back(vector<string>(num));
 		for (size_t cur = result.size() - 1, i = 0; i < num; ++i) {
 			result[cur][i] = row[i];
 		}
 	}
-	mysql_free_result(res); //ÊÍ·Å½á¹û¼¯×ÊÔ´
+	mysql_free_result(res); //é‡Šæ”¾ç»“æœé›†èµ„æº
 	return result;
 }
 
@@ -59,7 +63,7 @@ DbMsg::~DbMsg()
 	}
 }
 
-//Ìí¼ÓÏûÏ¢
+//æ·»åŠ æ¶ˆæ¯
 void DbMsg::push(const string& to, const string& from, const string& msg)
 {
 	string sql = "insert into " + tbName + "(toUser,fromUser,msg) values('"
@@ -67,19 +71,19 @@ void DbMsg::push(const string& to, const string& from, const string& msg)
 	if (fsLog) {
 		fsLog << GetTime() << ">>>execute: " + sql << endl;
 	}
-	if (db_conn.query(sql) != 0 && fsLog) { //Ö´ĞĞsqlÓï¾äÊ§°Ü·µ»Ø·Ç0
+	if (db_conn.query(sql) != 0 && fsLog) { //æ‰§è¡Œsqlè¯­å¥å¤±è´¥è¿”å›é0
 		fsLog << "Failed to insert: " << db_conn.error() << endl;
 	}
 }
 
-//»ñÈ¡Ö´ĞĞÖ¸¶¨sqlÓï¾äºóµÄ½á¹û
+//è·å–æ‰§è¡ŒæŒ‡å®šsqlè¯­å¥åçš„ç»“æœ
 vector<vector<string> > DbMsg::GetBySql(const string& sql)
 {
 	vector<vector<string> >result;
 	if (fsLog) {
 		fsLog << GetTime() << ">>>execute: " + sql << endl;
 	}
-	if (db_conn.query(sql) == 0) {   //Ö´ĞĞ³É¹¦Ôò°Ñ½á¹ûÊä³ö
+	if (db_conn.query(sql) == 0) {   //æ‰§è¡ŒæˆåŠŸåˆ™æŠŠç»“æœè¾“å‡º
 		result = db_conn.GetResult();
 	}
 	else if (fsLog) {
@@ -88,7 +92,7 @@ vector<vector<string> > DbMsg::GetBySql(const string& sql)
 	return result;
 }
 
-//¸ù¾İÖ¸¶¨sqlÓï¾äÉ¾³ıÏàÓ¦¼ÇÂ¼
+//æ ¹æ®æŒ‡å®šsqlè¯­å¥åˆ é™¤ç›¸åº”è®°å½•
 void DbMsg::RemoveBySql(const string& sql)
 {
 	if (fsLog) {
@@ -99,7 +103,7 @@ void DbMsg::RemoveBySql(const string& sql)
 	}
 }
 
-//»ñÈ¡µ±Ç°ÈÕÆÚºÍÊ±¼ä,ÓÃÓÚ¸üĞÂÈÕÖ¾
+//è·å–å½“å‰æ—¥æœŸå’Œæ—¶é—´,ç”¨äºæ›´æ–°æ—¥å¿—
 string DbMsg::GetTime()
 {
 	char time_buf[64];
@@ -108,7 +112,7 @@ string DbMsg::GetTime()
 	return time_buf;
 }
 
-//´´½¨´æ´¢ÁÄÌì¼ÇÂ¼µÄ±í
+//åˆ›å»ºå­˜å‚¨èŠå¤©è®°å½•çš„è¡¨
 void DbMsg::CreateTable()
 {
 	db_conn.query("show tables like '" + tbName + "'");
@@ -136,13 +140,13 @@ DbMsg::DbMsg(const string& _tableName, const string& _logFileName)
 	:tbName(_tableName)
 {
 	if (_logFileName != "") {
-		fsLog.open(_logFileName, std::ios::app); //append,Ö¸¿ÉÔÚÔ­logÎÄ¼şºó×·¼Ó
-	} //ÈôÈÕÖ¾ÃûÎª¿Õ×Ö·û´®£¬¼´²»ÏëÒªÈÕÖ¾ÎÄ¼ş£¬ÄÇÃ´¾Í²»»áµ÷ÓÃopen()£¬ÄÇÃ´fsLogÕâ¸ö¶ÔÏó¾ÍÊÇÊ§Ğ§µÄ£¨Ïàµ±ÓÚfalse£©
+		fsLog.open(_logFileName, std::ios::app); //append,æŒ‡å¯åœ¨åŸlogæ–‡ä»¶åè¿½åŠ 
+	} //è‹¥æ—¥å¿—åä¸ºç©ºå­—ç¬¦ä¸²ï¼Œå³ä¸æƒ³è¦æ—¥å¿—æ–‡ä»¶ï¼Œé‚£ä¹ˆå°±ä¸ä¼šè°ƒç”¨open()ï¼Œé‚£ä¹ˆfsLogè¿™ä¸ªå¯¹è±¡å°±æ˜¯å¤±æ•ˆçš„ï¼ˆç›¸å½“äºfalseï¼‰
 	CreateTable();
 }
 
 
-//´ÓÀëÏßÏûÏ¢±íÖĞµÃµ½ËùÓĞ·¢ËÍ¸øuserµÄÏûÏ¢,ÌáÈ¡Íêºó´ÓÊı¾İ¿âÉ¾³ı
+//ä»ç¦»çº¿æ¶ˆæ¯è¡¨ä¸­å¾—åˆ°æ‰€æœ‰å‘é€ç»™userçš„æ¶ˆæ¯,æå–å®Œåä»æ•°æ®åº“åˆ é™¤
 vector<vector<string> > DbOfflineMsg::pop(const string& user)
 {
 	string sql = "select from User,time,msg from " + tbName
@@ -150,7 +154,7 @@ vector<vector<string> > DbOfflineMsg::pop(const string& user)
 
 	vector<vector<string> >result = GetBySql(sql);
 
-	//É¾³ı·¢¸øuserµÄËùÓĞÏûÏ¢
+	//åˆ é™¤å‘ç»™userçš„æ‰€æœ‰æ¶ˆæ¯
 	if (result.size() > 0) {
 		sql = "delete from " + tbName + " where toUser='" + user + "'";
 		RemoveBySql(sql);
@@ -160,18 +164,18 @@ vector<vector<string> > DbOfflineMsg::pop(const string& user)
 	return result;
 }
 
-//Ìí¼ÓÁÄÌì¼ÇÂ¼ÏûÏ¢
+//æ·»åŠ èŠå¤©è®°å½•æ¶ˆæ¯
 void DbChatLogMsg::push(const string& userOthers, const string& msg, bool isReceived)
 {
-	if (isReceived) { //ÊÕµ½ÏûÏ¢
+	if (isReceived) { //æ”¶åˆ°æ¶ˆæ¯
 		DbMsg::push(userName, userOthers, msg);
 	}
-	else { //·¢ËÍÏûÏ¢
+	else { //å‘é€æ¶ˆæ¯
 		DbMsg::push(userOthers, userName, msg);
 	}
 }
 
-//Ìí¼ÓÊÕµ½µÄ´øÊ±¼ä¼ÇÂ¼µÄÀëÏßÏûÏ¢
+//æ·»åŠ æ”¶åˆ°çš„å¸¦æ—¶é—´è®°å½•çš„ç¦»çº¿æ¶ˆæ¯
 void DbChatLogMsg::PushOffline(const string& from, const string& msg,
 	const string& _time)
 {
@@ -180,14 +184,14 @@ void DbChatLogMsg::PushOffline(const string& from, const string& msg,
 	if (fsLog) {
 		fsLog << GetTime() << ">>>execute: " + sql << endl;
 	}
-	if (db_conn.query(sql) != 0 && fsLog) { //Ö´ĞĞsqlÓï¾äÊ§°Ü·µ»Ø·Ç0
+	if (db_conn.query(sql) != 0 && fsLog) { //æ‰§è¡Œsqlè¯­å¥å¤±è´¥è¿”å›é0
 		fsLog << "Failed to insert: " << db_conn.error() << endl;
 	}
 }
 
 
 
-//»ñÈ¡ÏûÏ¢user·¢À´µÄ»ò·¢¸øuserµÄËùÓĞÏûÏ¢
+//è·å–æ¶ˆæ¯userå‘æ¥çš„æˆ–å‘ç»™userçš„æ‰€æœ‰æ¶ˆæ¯
 vector<vector<string> > DbChatLogMsg::get(const string& user)
 {
 	string sql = "select fromUser,time,msg from " + tbName +
@@ -195,7 +199,7 @@ vector<vector<string> > DbChatLogMsg::get(const string& user)
 	return GetBySql(sql);
 }
 
-//ÔÚ¸ÃÓÃ»§µÄÁÄÌì¼ÇÂ¼ÖĞ²éÕÒÓëwithUserµÄ°üº¬strµÄÏûÏ¢¼ÇÂ¼
+//åœ¨è¯¥ç”¨æˆ·çš„èŠå¤©è®°å½•ä¸­æŸ¥æ‰¾ä¸withUserçš„åŒ…å«strçš„æ¶ˆæ¯è®°å½•
 vector<vector<string> > DbChatLogMsg::find(const string& str, const string& withUser)
 {
 	string sql = "select fromUser,toUser,time,msg from " + tbName + " where ";
@@ -206,7 +210,7 @@ vector<vector<string> > DbChatLogMsg::find(const string& str, const string& with
 	return GetBySql(sql);
 }
 
-//¸ù¾İ´«µİµÄÓÃ»§ÃûÉ¾³ıÓëÓÃ»§userµÄÁÄÌì¼ÇÂ¼,´«Èë"*"ÔòÉ¾³ıËùÓĞ¼ÇÂ¼
+//æ ¹æ®ä¼ é€’çš„ç”¨æˆ·ååˆ é™¤ä¸ç”¨æˆ·userçš„èŠå¤©è®°å½•,ä¼ å…¥"*"åˆ™åˆ é™¤æ‰€æœ‰è®°å½•
 void DbChatLogMsg::remove(const string& user)
 {
 	string sql = "delete from " + tbName;
@@ -216,7 +220,7 @@ void DbChatLogMsg::remove(const string& user)
 	RemoveBySql(sql);
 }
 
-//»ñÈ¡Óëµ±Ç°ÓÃ»§ÓĞÁÄÌì¼ÇÂ¼µÄÓÃ»§ÁĞ±í
+//è·å–ä¸å½“å‰ç”¨æˆ·æœ‰èŠå¤©è®°å½•çš„ç”¨æˆ·åˆ—è¡¨
 vector<string> DbChatLogMsg::GetUserWithChatLog()
 {
 	string sql = "select distinct toUser from " + tbName;
@@ -230,8 +234,8 @@ vector<string> DbChatLogMsg::GetUserWithChatLog()
 	for (auto &elem : users) {
 		userList[elem[0]];
 	}
-	userList.erase(userList.find(userName)); //É¾³ıÓÃ»§ÁĞ±íÖĞµÄ×Ô¼º
-	//½«½á¹û±£´æµ½vector<string>ÖĞ·µ»Ø
+	userList.erase(userList.find(userName)); //åˆ é™¤ç”¨æˆ·åˆ—è¡¨ä¸­çš„è‡ªå·±
+	//å°†ç»“æœä¿å­˜åˆ°vector<string>ä¸­è¿”å›
 	vector<string> res;
 	res.reserve(userList.size());
 	for (auto &it : userList) {
@@ -240,21 +244,21 @@ vector<string> DbChatLogMsg::GetUserWithChatLog()
 	return res;
 }
 
-//»ñÈ¡µ±Ç°ÓÃ»§µÄÓÃ»§Ãû
+//è·å–å½“å‰ç”¨æˆ·çš„ç”¨æˆ·å
 const string& DbChatLogMsg::GetUserName()
 {
 	return userName;
 }
 
 using std::cout;
-//¿ÉÖ±½ÓÊä³ö²éÑ¯½á¹û
+//å¯ç›´æ¥è¾“å‡ºæŸ¥è¯¢ç»“æœ
 std::ostream& operator<<(std::ostream& out, const vector<vector<string> >& res)
 {
 	if (res.size() == 0) {
-		cout << "ÔİÎŞÄÚÈİ¿ÉÏÔÊ¾!" << endl;
+		cout << "æš‚æ— å†…å®¹å¯æ˜¾ç¤º!" << endl;
 		return out;
 	}
-	for (auto &it : res) { //ÏÔÊ¾ÌáÈ¡³öµÄÀëÏßÏûÏ¢ÄÚÈİ
+	for (auto &it : res) { //æ˜¾ç¤ºæå–å‡ºçš„ç¦»çº¿æ¶ˆæ¯å†…å®¹
 		for (auto &elem : it) {
 			cout << elem << " ";
 		}
