@@ -2,7 +2,7 @@
 #pragma once
 
 /*
-���ﶨ���������ݿ⹵ͨ��һЩ����
+这里定义了与数据库沟通的一些函数
 */
 #include <iostream>
 #include <fstream>
@@ -11,7 +11,7 @@
 #include <ctime>
 #include <stdexcept>
 #include <unordered_map>
-#include <windows.h> //�����ڰ���mysql.h֮ǰ����windows.h
+#include <windows.h> //必须在包含mysql.h之前包含windows.h
 #include <mysql.h>
 
 #include"ObjectConstant.h"
@@ -20,16 +20,16 @@
 #define PORT 12000
 
 /*
-ÿ��send��recv����Ϣ�����һ����λ������Ϣ����
-��Ϣ���� | ���
+每次send和recv的消息的最后一附加位代表消息类型
+消息类型 | 编号
 -----------
-��¼��֤ | 1
-��ʵ��Ϣ | 2
-ע����֤ | 3
-������Ϣ | 4
-����Ⱥ�� | 5
-���Ӻ��� | 6
-ѡ����� | 7
+登录验证 | 1
+真实消息 | 2
+注册验证 | 3
+下线信息 | 4
+单聊群聊 | 5
+添加好友 | 6
+选择好友 | 7
 */
 #define CHECKNUM 1
 #define MESSAGENUM 2
