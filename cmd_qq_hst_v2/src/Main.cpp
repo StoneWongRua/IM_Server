@@ -6,7 +6,7 @@
 #include <windows.h>
 using namespace std;
 
-#include "FriendDBUtil.h"
+
 #include "GlobalConstant.h"
 #include "Sha256.h"
 #include "Logger.h"
@@ -14,6 +14,14 @@ using namespace std;
 
 #pragma comment(lib, "ws2_32.lib")
 
+
+#pragma comment(lib, "ws2_32.lib")
+
+
+string DbConnector::host_ = "localhost";
+string DbConnector::user_ = "root";
+string DbConnector::passwd_ = "root";
+string DbConnector::db_ = "im";
 
 //全局变量
 SOCKET serverSocket;//服务端套接字
@@ -26,9 +34,6 @@ static int friendssnum;//数据库中好友对的数量
 Friends friends[100];//从数据库中接收的好友对信息
 char* userIP;
 
-
-
-
 DbUtil* dbUtil = new DbUtil();
 HstSocket* hstSocket = new HstSocket();
 
@@ -39,8 +44,6 @@ void DbUtil::SingleConnection(int idx) {//单聊函数
 	int count = 0;
 	string friendList[100];
 	string friendStream;
-
-	cout << "friendssnum:" << friendssnum << endl;
 
 	for (int i = 0; i < friendssnum; i++) {
 		if (usernames[idx] == friends[i].user1name) {
@@ -239,7 +242,7 @@ void DbUtil::AddFriend(int idx,char* addFriendName) {
 	}
 
 
-int HstSocket::prepare() {
+int prepare() {
 	SetConsoleTitle("聊天系统服务端");
 	/*
 	作用：前期准备，连接数据库，创建socket等
@@ -248,7 +251,7 @@ int HstSocket::prepare() {
 	*/
 	memset(users, 0, sizeof(users));
 	//初始化数据库,建表
-	
+
 	dbUtil->DatabaseInit();
 	dbUtil->CreateUser();
 	dbUtil->CreateFriends();
@@ -260,12 +263,12 @@ int HstSocket::prepare() {
 	WSAStartup(MAKEWORD(2, 2), &wsData);
 	if ((LOBYTE(wsData.wVersion) != 2) || (HIBYTE(wsData.wVersion) != 2)) {
 		printf("------请求版本协议失败------\n");
-		ServerLog initServerLog_1("请求版本协议失败", 
+		ServerLog initServerLog_1("请求版本协议失败",
 			"InitServer.log");
 		return -1;
 	}
 	printf("------请求版本协议成功------\n");
-	ServerLog initServerLog_2("请求版本协议成功", 
+	ServerLog initServerLog_2("请求版本协议成功",
 		"InitServer.log");
 
 
@@ -273,13 +276,13 @@ int HstSocket::prepare() {
 	serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serverSocket == SOCKET_ERROR) {
 		printf("创建socket失败\n");
-		ServerLog initServerLog_3("创建socket失败", 
+		ServerLog initServerLog_3("创建socket失败",
 			"InitServer.log");
 		WSACleanup();
 		return -2;
 	}
 	printf("------创建socket成功--------\n");
-	ServerLog initServerLog_4("创建socket成功", 
+	ServerLog initServerLog_4("创建socket成功",
 		"InitServer.log");
 
 
@@ -294,14 +297,14 @@ int HstSocket::prepare() {
 	int b = bind(serverSocket, (sockaddr*)& addr, sizeof addr);
 	if (b == -1) {
 		printf("绑定ip，port失败\n");
-		ServerLog serverLog("绑定ip，port失败", 
+		ServerLog serverLog("绑定ip，port失败",
 			"InitServer.log");
 		closesocket(serverSocket);
 		WSACleanup();
 		return -2;
 	}
 	printf("------绑定ip，端口成功------\n");
-	ServerLog initServerLog_5("绑定ip，端口成功", 
+	ServerLog initServerLog_5("绑定ip，端口成功",
 		"InitServer.log");
 
 
@@ -309,7 +312,7 @@ int HstSocket::prepare() {
 	int l = listen(serverSocket, 10);
 	if (l == -1) {
 		printf("监听失败\n");
-		ServerLog initServerLog_6("监听失败", 
+		ServerLog initServerLog_6("监听失败",
 			"InitServer.log");
 		closesocket(serverSocket);
 		WSACleanup();
@@ -317,12 +320,12 @@ int HstSocket::prepare() {
 	}
 
 	printf("正在监听......\n");
-	ServerLog initServerLog_7("开始监听\n", 
+	ServerLog initServerLog_7("开始监听\n",
 		"InitServer.log");
 	return 0;
 }
 
-void HstSocket::service(int idx) {
+void service(int idx) {
 
 	/*
 	作用：每有一个客户端连接，建立新的线程服务
@@ -367,7 +370,7 @@ void HstSocket::service(int idx) {
 				int userid = dbUtil->LogInCheck(name, sha256);
 				if (userid == -1) {
 					cout << usernames[idx] << "登录失败！" << endl;
-					ServerLog loginLog("用户" +string(usernames[idx]) + "登录失败！", 
+					ServerLog loginLog("用户" + string(usernames[idx]) + "登录失败！",
 						"login.log");
 					checkBuff[0] = WORNG_USER;
 				}
@@ -388,7 +391,7 @@ void HstSocket::service(int idx) {
 					cout << usernames[idx] << "已存在！" << endl;
 					ServerLog registerLog("用户" + string(usernames[idx]) + "注册失败！", "Register.log");
 				}
-				else if(_register == 1)
+				else if (_register == 1)
 				{
 					//更新本地用户类顺便改变新注册用户的在线状态
 					usersnum = dbUtil->GetUsers(users);
@@ -426,20 +429,19 @@ void HstSocket::service(int idx) {
 
 		else if (buff[0] == '2') {
 			cout << "用户" << usernames[idx] << "选择了单聊" << endl;
-			ServerLog chooseLog_1("用户" + string(usernames[idx]) + "选择了单聊！", 
+			ServerLog chooseLog_1("用户" + string(usernames[idx]) + "选择了单聊！",
 				"Choose.log");
 			dbUtil->SingleConnection(idx);
 		}
 
-}
+	}
 
 
 }
-
 
 
 int main() {
-	if (hstSocket->prepare() < 0)
+	if (prepare() < 0)
 	{
 		return 0;
 	}
@@ -462,10 +464,13 @@ int main() {
 		userIP = inet_ntoa(cAddr.sin_addr);
 		printf("用户%d连接了服务器：%s!\n", concOrder, userIP);
 		ServerLog serverLog_1("用户" + string(userIP) + "连接了服务器", "Server.log");
-		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)hstSocket->service, (char*)concOrder, NULL, NULL);
+		CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)service, (char*)concOrder, NULL, NULL);
 		concOrder++;
 
 	}
 
 	return 0;
 }
+
+
+
