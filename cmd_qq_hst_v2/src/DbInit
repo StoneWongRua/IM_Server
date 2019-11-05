@@ -1,3 +1,8 @@
+/*
+*@Discription æ•°æ®åº“ä¿¡æ¯åˆå§‹åŒ–
+*@Author tong
+*/
+
 #include "FriendDBUtil.h"
 
 
@@ -13,36 +18,36 @@ DbUtil::~DbUtil()
 
 int DbUtil::DatabaseInit() {
 	/*
-	×÷ÓÃ£º³õÊ¼»¯Êı¾İ¿â
-	²ÎÊı£ºÎŞ
-	·µ»ØÖµ£º0³É¹¦£¬-1Ê§°Ü
+	ä½œç”¨ï¼šåˆå§‹åŒ–æ•°æ®åº“
+	å‚æ•°ï¼šæ— 
+	è¿”å›å€¼ï¼š0æˆåŠŸï¼Œ-1å¤±è´¥
 	*/
-	//³õÊ¼»¯Êı¾İ¿â
+	//åˆå§‹åŒ–æ•°æ®åº“
 	mysql_library_init(0, NULL, NULL);
-	//³õÊ¼»¯Êı¾İ½á¹¹
+	//åˆå§‹åŒ–æ•°æ®ç»“æ„
 	if (NULL != mysql_init(&mydata)) {
-		cout << "======Êı¾İ¿â³õÊ¼»¯³É¹¦====" << endl;
+		cout << "======æ•°æ®åº“åˆå§‹åŒ–æˆåŠŸ====" << endl;
 	}
 	else {
 		cout << "mysql_init() failed" << endl;
 		return -1;
 	}
 
-	//ÔÚÁ¬½ÓÊı¾İ¿âÖ®Ç°£¬ÉèÖÃ¶îÍâµÄÁ¬½ÓÑ¡Ïî
-	//¿ÉÒÔÉèÖÃµÄÑ¡ÏîºÜ¶à£¬ÕâÀïÉèÖÃ×Ö·û¼¯£¬·ñÔòÎŞ·¨´¦ÀíÖĞÎÄ
+	//åœ¨è¿æ¥æ•°æ®åº“ä¹‹å‰ï¼Œè®¾ç½®é¢å¤–çš„è¿æ¥é€‰é¡¹
+	//å¯ä»¥è®¾ç½®çš„é€‰é¡¹å¾ˆå¤šï¼Œè¿™é‡Œè®¾ç½®å­—ç¬¦é›†ï¼Œå¦åˆ™æ— æ³•å¤„ç†ä¸­æ–‡
 	if (0 == mysql_options(&mydata, MYSQL_SET_CHARSET_NAME, "gbk")) {
-		cout << "======Êı¾İ¿âÉèÖÃ³É¹¦======" << endl;
+		cout << "======æ•°æ®åº“è®¾ç½®æˆåŠŸ======" << endl;
 	}
 	else {
 		cout << "mysql_options() failed" << endl;
 		return -1;
 	}
 
-	//Á¬½ÓÊı¾İ¿â
+	//è¿æ¥æ•°æ®åº“
 	if (NULL != mysql_real_connect(&mydata, NULL, "root", "root", "im", 3306, NULL, CLIENT_MULTI_STATEMENTS))
-		//ÕâÀïµÄµØÖ·£¬ÓÃ»§Ãû£¬ÃÜÂë£¬¶Ë¿Ú¿ÉÒÔ¸ù¾İ×Ô¼º±¾µØµÄÇé¿ö¸ü¸Ä
+		//è¿™é‡Œçš„åœ°å€ï¼Œç”¨æˆ·åï¼Œå¯†ç ï¼Œç«¯å£å¯ä»¥æ ¹æ®è‡ªå·±æœ¬åœ°çš„æƒ…å†µæ›´æ”¹
 	{
-		cout << "======Êı¾İ¿âÁ¬½Ó³É¹¦======" << endl;
+		cout << "======æ•°æ®åº“è¿æ¥æˆåŠŸ======" << endl;
 	}
 	else {
 		cout << "mysql_real_connect() failed" << endl;
@@ -50,15 +55,15 @@ int DbUtil::DatabaseInit() {
 		return -1;
 	}
 	return 0;
-	//sql×Ö·û´®
+	//sqlå­—ç¬¦ä¸²
 }
 
 
 int DbUtil::CreateUser() {
 	/*
-	×÷ÓÃ£º´´½¨ÓÃ»§±í
-	²ÎÊı£ºÎŞ
-	·µ»ØÖµ£º0³É¹¦£¬-1Ê§°Ü
+	ä½œç”¨ï¼šåˆ›å»ºç”¨æˆ·è¡¨
+	å‚æ•°ï¼šæ— 
+	è¿”å›å€¼ï¼š0æˆåŠŸï¼Œ-1å¤±è´¥
 	*/
 	sqlstr = "CREATE TABLE IF NOT EXISTS `user2` (";
 	sqlstr += " `ID` int NOT NULL AUTO_INCREMENT,";
@@ -69,7 +74,7 @@ int DbUtil::CreateUser() {
 	sqlstr += " ) ENGINE = InnoDB DEFAULT CHARSET = utf8";
 
 	if (mysql_query(&mydata, sqlstr.c_str()) == 0) {
-		cout << "======ÓÃ»§±í´´½¨³É¹¦======" << endl;
+		cout << "======ç”¨æˆ·è¡¨åˆ›å»ºæˆåŠŸ======" << endl;
 	}
 	else {
 		cout << "mysql_query() create table failed" << endl;
@@ -84,9 +89,9 @@ int DbUtil::CreateUser() {
 
 int DbUtil::CreateFriends() {
 	/*
-	×÷ÓÃ£º´´½¨ÓÃ»§±í
-	²ÎÊı£ºÎŞ
-	·µ»ØÖµ£º0³É¹¦£¬-1Ê§°Ü
+	ä½œç”¨ï¼šåˆ›å»ºç”¨æˆ·è¡¨
+	å‚æ•°ï¼šæ— 
+	è¿”å›å€¼ï¼š0æˆåŠŸï¼Œ-1å¤±è´¥
 	*/
 	sqlstr = "CREATE TABLE IF NOT EXISTS `friends` (";
 	sqlstr += " `ID` int NOT NULL AUTO_INCREMENT,";
@@ -96,7 +101,7 @@ int DbUtil::CreateFriends() {
 	sqlstr += " ) ENGINE = InnoDB DEFAULT CHARSET = utf8";
 
 	if (mysql_query(&mydata, sqlstr.c_str()) == 0) {
-		cout << "======ºÃÓÑ¶Ô±í´´½¨³É¹¦======" << endl;
+		cout << "======å¥½å‹å¯¹è¡¨åˆ›å»ºæˆåŠŸ======" << endl;
 	}
 	else {
 		cout << "mysql_query() create table failed" << endl;
@@ -113,15 +118,15 @@ int DbUtil::CreateFriends() {
 
 int DbUtil::GetUsers(User* users) {
 	/*
-	×÷ÓÃ£º½«Êı¾İ¿âÖĞµÄÓÃ»§±íµ¼Èëµ½±¾µØ
-	²ÎÊı£ºÓÃ»§ÀàÊı×é
-	·µ»ØÖµ£ºµ¼ÈëµÄÓÃ»§µÄÊıÁ¿
+	ä½œç”¨ï¼šå°†æ•°æ®åº“ä¸­çš„ç”¨æˆ·è¡¨å¯¼å…¥åˆ°æœ¬åœ°
+	å‚æ•°ï¼šç”¨æˆ·ç±»æ•°ç»„
+	è¿”å›å€¼ï¼šå¯¼å…¥çš„ç”¨æˆ·çš„æ•°é‡
 	*/
-	//½«Êı¾İ¿âÖĞµÄÓÃ»§±íµ¼Èëµ½±¾µØ£¬·µ»ØÖµÎªÓÃ»§ÊıÁ¿
+	//å°†æ•°æ®åº“ä¸­çš„ç”¨æˆ·è¡¨å¯¼å…¥åˆ°æœ¬åœ°ï¼Œè¿”å›å€¼ä¸ºç”¨æˆ·æ•°é‡
 	sqlstr = "SELECT *FROM `im`.`user2`;";
 	if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-		cout << "=====ÓÃ»§±íÊÕ¼¯³É¹¦=====" << endl;
-		//Ò»´ÎĞÔÈ¡µÃÊı¾İ¼¯
+		cout << "=====ç”¨æˆ·è¡¨æ”¶é›†æˆåŠŸ=====" << endl;
+		//ä¸€æ¬¡æ€§å–å¾—æ•°æ®é›†
 		result = mysql_store_result(&mydata);
 		MYSQL_ROW row = NULL;
 		row = mysql_fetch_row(result);
@@ -139,23 +144,23 @@ int DbUtil::GetUsers(User* users) {
 		return count;
 	}
 	else {
-		cout << "ÓÃ»§ÑéÖ¤ select data failed" << endl;
+		cout << "ç”¨æˆ·éªŒè¯ select data failed" << endl;
 		mysql_close(&mydata);
 		return -2;
 	}
 }
 
 int DbUtil::GetFriends(Friends* friends) {/*
-	×÷ÓÃ£º½«Êı¾İ¿âÖĞµÄºÃÓÑ¶Ô±íµ¼Èëµ½±¾µØ
-	²ÎÊı£ººÃÓÑ¶ÔÀàÊı×é
-	·µ»ØÖµ£ºµ¼ÈëµÄºÃÓÑ¶ÔµÄÊıÁ¿
+	ä½œç”¨ï¼šå°†æ•°æ®åº“ä¸­çš„å¥½å‹å¯¹è¡¨å¯¼å…¥åˆ°æœ¬åœ°
+	å‚æ•°ï¼šå¥½å‹å¯¹ç±»æ•°ç»„
+	è¿”å›å€¼ï¼šå¯¼å…¥çš„å¥½å‹å¯¹çš„æ•°é‡
 	*/
 
 	sqlstr = "SELECT * FROM `im`.`friends`;";
 
 	if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-		cout << "======ºÃÓÑ¶Ô±íÊÕ¼¯³É¹¦======" << endl;
-		//Ò»´ÎĞÔÈ¡µÃÊı¾İ¼¯
+		cout << "======å¥½å‹å¯¹è¡¨æ”¶é›†æˆåŠŸ======" << endl;
+		//ä¸€æ¬¡æ€§å–å¾—æ•°æ®é›†
 		result = mysql_store_result(&mydata);
 		MYSQL_ROW row = NULL;
 		row = mysql_fetch_row(result);
@@ -174,34 +179,34 @@ int DbUtil::GetFriends(Friends* friends) {/*
 		return count;
 	}
 	else {
-		cout << "ºÃÓÑ¶Ô select data failed" << endl;
+		cout << "å¥½å‹å¯¹ select data failed" << endl;
 		mysql_close(&mydata);
 		return -2;
 	}
 }
 
 int DbUtil::LogInCheck(string name, string password) {	
-	/*	×÷ÓÃ£º½øĞĞÓÃ»§Éí·İÑéÖ¤	²ÎÊı£ºÓÃ»§ÃûÓëÃÜÂë	·µ»ØÖµ£ºÈô³É¹¦£¬·µ»ØÓÃ»§id£¬ÈôÃ»ÓĞ¸ÃÓÃ»§£¬·µ»Ø-1	*/	
-	//²éÑ¯Êı¾İ¿âÖĞµÄÓÃ»§Éí·İ£¬ Èô³É¹¦£¬·µ»ØÓÃ»§id£¬ÈôÃ»ÓĞ¸ÃÓÃ»§£¬·µ»Ø-1	
+	/*	ä½œç”¨ï¼šè¿›è¡Œç”¨æˆ·èº«ä»½éªŒè¯	å‚æ•°ï¼šç”¨æˆ·åä¸å¯†ç 	è¿”å›å€¼ï¼šè‹¥æˆåŠŸï¼Œè¿”å›ç”¨æˆ·idï¼Œè‹¥æ²¡æœ‰è¯¥ç”¨æˆ·ï¼Œè¿”å›-1	*/	
+	//æŸ¥è¯¢æ•°æ®åº“ä¸­çš„ç”¨æˆ·èº«ä»½ï¼Œ è‹¥æˆåŠŸï¼Œè¿”å›ç”¨æˆ·idï¼Œè‹¥æ²¡æœ‰è¯¥ç”¨æˆ·ï¼Œè¿”å›-1	
 	sqlstr = "SELECT *FROM `im`.`user2`;";	
 
 	if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-		cout << "=====ÓÃ»§Êı¾İÑéÖ¤³É¹¦=====" << endl;
-		//Ò»´ÎĞÔÈ¡µÃÊı¾İ¼¯		
+		cout << "=====ç”¨æˆ·æ•°æ®éªŒè¯æˆåŠŸ=====" << endl;
+		//ä¸€æ¬¡æ€§å–å¾—æ•°æ®é›†		
 		result = mysql_store_result(&mydata);
 		MYSQL_ROW row = NULL;
 		row = mysql_fetch_row(result);
 		while (NULL != row) {
 			if (name == row[2] && password == row[3]) {
-				cout << name << "µÇÂ¼³É¹¦£¡" << endl;
+				cout << name << "ç™»å½•æˆåŠŸï¼" << endl;
 				return atoi(row[0]);
 			}
 			row = mysql_fetch_row(result);
-		}		//cout << "µÇÂ¼Ê§°Ü£¡" << endl;`		
+		}		//cout << "ç™»å½•å¤±è´¥ï¼" << endl;`		
 		return -1;
 	}
 	else {
-		cout << "ÓÃ»§ÑéÖ¤ select data failed" << endl;
+		cout << "ç”¨æˆ·éªŒè¯ select data failed" << endl;
 		mysql_close(&mydata);
 		return -2;
 	}
@@ -209,37 +214,37 @@ int DbUtil::LogInCheck(string name, string password) {
 
 int DbUtil::InsertUser(string ip, string name, string password) {
 	/*
-	×÷ÓÃ£º½«ĞÂÓÃ»§¼ÓÈëÊı¾İ¿â
-	²ÎÊı£ºÓÃ»§ip£¬ÓÃ»§Ãû£¬ÃÜÂë
-	·µ»ØÖµ£º³É¹¦Îª0£¬Ê§°ÜÎª-1
+	ä½œç”¨ï¼šå°†æ–°ç”¨æˆ·åŠ å…¥æ•°æ®åº“
+	å‚æ•°ï¼šç”¨æˆ·ipï¼Œç”¨æˆ·åï¼Œå¯†ç 
+	è¿”å›å€¼ï¼šæˆåŠŸä¸º0ï¼Œå¤±è´¥ä¸º-1
 	*/
 
 	sqlstr = "SELECT *FROM `im`.`user2` where name = '"+name+"';";
 
 	if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-		cout << "=====ÓÃ»§Êı¾İÑéÖ¤³É¹¦=====" << endl;
+		cout << "=====ç”¨æˆ·æ•°æ®éªŒè¯æˆåŠŸ=====" << endl;
 
-		//Ò»´ÎĞÔÈ¡µÃÊı¾İ¼¯		
+		//ä¸€æ¬¡æ€§å–å¾—æ•°æ®é›†		
 		result = mysql_store_result(&mydata);
 		MYSQL_ROW row = NULL;
 		row = mysql_fetch_row(result);
 
 		if (NULL != row) {
-			cout <<  "ÒÑ´æÔÚ£¡" << endl;
+			cout <<  "å·²å­˜åœ¨ï¼" << endl;
 			return -4;
 			row = mysql_fetch_row(result);
 		}
 
 		else
 		{
-			//²åÈëuser
+			//æ’å…¥user
 			sqlstr = "INSERT INTO `im`.`user2` (`ID`, `ipAddress`, `name`, `password`) ";
 			sqlstr += "VALUES (default,inet_aton('";
 			sqlstr += ip;
 			sqlstr += "'), '" + name + "', '" + password + "');";
 
 			if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-				cout << "=====´´½¨ĞÂÓÃ»§³É¹¦=====" << endl;
+				cout << "=====åˆ›å»ºæ–°ç”¨æˆ·æˆåŠŸ=====" << endl;
 				do {
 					MYSQL_RES* pRes = mysql_store_result(&mydata);
 					if (pRes != NULL)
@@ -257,7 +262,7 @@ int DbUtil::InsertUser(string ip, string name, string password) {
 		return -1;
 	}
 	else {
-		cout << "ÓÃ»§ÑéÖ¤ select data failed" << endl;
+		cout << "ç”¨æˆ·éªŒè¯ select data failed" << endl;
 		mysql_close(&mydata);
 		return -2;
 	}
@@ -266,15 +271,15 @@ int DbUtil::InsertUser(string ip, string name, string password) {
 
 int DbUtil::InsertFriends(string user1name, string user2name) {
 	/*
-	×÷ÓÃ£º½«ĞÂºÃÓÑ¶Ô¼ÓÈëÊı¾İ¿â
-	²ÎÊı£ºÓÃ»§1Ãû£¬ÓÃ»§2Ãû
-	·µ»ØÖµ£º³É¹¦Îª0£¬Ê§°ÜÎª-1
+	ä½œç”¨ï¼šå°†æ–°å¥½å‹å¯¹åŠ å…¥æ•°æ®åº“
+	å‚æ•°ï¼šç”¨æˆ·1åï¼Œç”¨æˆ·2å
+	è¿”å›å€¼ï¼šæˆåŠŸä¸º0ï¼Œå¤±è´¥ä¸º-1
 	*/
 	sqlstr = "INSERT INTO `im`.`friends` (`user1name`, `user2name`)";
 	sqlstr += "VALUES ('" + user1name;
 	sqlstr += "','" + user2name + "');";
 	if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-		cout << "=====´´½¨ĞÂºÃÓÑ¶Ô³É¹¦====" << endl;
+		cout << "=====åˆ›å»ºæ–°å¥½å‹å¯¹æˆåŠŸ====" << endl;
 		do {
 			MYSQL_RES* pRes = mysql_store_result(&mydata);
 			if (pRes != NULL)
@@ -283,7 +288,7 @@ int DbUtil::InsertFriends(string user1name, string user2name) {
 		return 0;
 	}
 	else {
-		cout << "=====´´½¨ĞÂºÃÓÑ¶ÔÊ§°Ü====" << endl;
+		cout << "=====åˆ›å»ºæ–°å¥½å‹å¯¹å¤±è´¥====" << endl;
 		mysql_close(&mydata);
 		return -1;
 	}
@@ -291,25 +296,25 @@ int DbUtil::InsertFriends(string user1name, string user2name) {
 
 
 
-//»ñÈ¡½á¹û¼¯,½«Æä±£´æµ½¶şÎ¬stringÊı×éÖĞ
+//è·å–ç»“æœé›†,å°†å…¶ä¿å­˜åˆ°äºŒç»´stringæ•°ç»„ä¸­
 //vector<vector<string> > DbUtil::GetResult()
 //{
 //	vector<vector<string> >result;
 //	MYSQL_RES* res = mysql_store_result(mysql);
 //	if (res == NULL)
 //		return result;
-//	unsigned num = mysql_num_fields(res); //½á¹û¼¯µÄÁĞÊı
+//	unsigned num = mysql_num_fields(res); //ç»“æœé›†çš„åˆ—æ•°
 //	for (MYSQL_ROW row; (row = mysql_fetch_row(res)) != NULL;) {
 //		result.push_back(vector<string>(num));
 //		for (size_t cur = result.size() - 1, i = 0; i < num; ++i) {
 //			result[cur][i] = row[i];
 //		}
 //	}
-//	mysql_free_result(res); //ÊÍ·Å½á¹û¼¯×ÊÔ´
+//	mysql_free_result(res); //é‡Šæ”¾ç»“æœé›†èµ„æº
 //	return result;
 //}
 
-//»ñÈ¡µ±Ç°ÈÕÆÚºÍÊ±¼ä,ÓÃÓÚ¸üĞÂÈÕÖ¾
+//è·å–å½“å‰æ—¥æœŸå’Œæ—¶é—´,ç”¨äºæ›´æ–°æ—¥å¿—
 string DbUtil::GetTime()
 {
 	char time_buf[64];
@@ -328,9 +333,9 @@ int DbUtil::test(string user1name) {
 
 int DbUtil::InsertFriend(string user1name, string user2name) {
 	/*
-	×÷ÓÃ£º½«ĞÂºÃÓÑ¶Ô¼ÓÈëÊı¾İ¿â
-	²ÎÊı£ºÓÃ»§1Ãû£¬ÓÃ»§2Ãû
-	·µ»ØÖµ£º³É¹¦Îª0£¬Ê§°ÜÎª-1
+	ä½œç”¨ï¼šå°†æ–°å¥½å‹å¯¹åŠ å…¥æ•°æ®åº“
+	å‚æ•°ï¼šç”¨æˆ·1åï¼Œç”¨æˆ·2å
+	è¿”å›å€¼ï¼šæˆåŠŸä¸º0ï¼Œå¤±è´¥ä¸º-1
 	*/
 	string sqlstr_c = "SELECT * FROM `im`.`user2` WHERE user2name = '" + user2name + "';";
 	string sqlstr = "SELECT * FROM `im`.`friends`WHERE user1name ='" + user1name + "' and user2name = '" + user2name + "';";
@@ -341,9 +346,9 @@ int DbUtil::InsertFriend(string user1name, string user2name) {
 
 	if (mysql_query(&mydata, sqlstr.c_str()) == 0) {
 
-		cout << "=====ÓÃ»§Êı¾İÑéÖ¤³É¹¦=====" << endl;
+		cout << "=====ç”¨æˆ·æ•°æ®éªŒè¯æˆåŠŸ=====" << endl;
 
-		//Ò»´ÎĞÔÈ¡µÃÊı¾İ¼¯  
+		//ä¸€æ¬¡æ€§å–å¾—æ•°æ®é›†  
 		result = mysql_store_result(&mydata);
 		MYSQL_ROW row = NULL;
 		row = mysql_fetch_row(result);
@@ -354,7 +359,7 @@ int DbUtil::InsertFriend(string user1name, string user2name) {
 			sqlstr += "VALUES ('" + user1name;
 			sqlstr += "','" + user2name + "');";
 			if (0 == mysql_query(&mydata, sqlstr.c_str())) {
-				cout << "=====´´½¨ĞÂºÃÓÑ¶Ô³É¹¦====" << endl;
+				cout << "=====åˆ›å»ºæ–°å¥½å‹å¯¹æˆåŠŸ====" << endl;
 				do {
 					MYSQL_RES* pRes = mysql_store_result(&mydata);
 					if (pRes != NULL)
@@ -363,26 +368,26 @@ int DbUtil::InsertFriend(string user1name, string user2name) {
 				return 0;
 			}
 			else {
-				cout << "=====´´½¨ĞÂºÃÓÑ¶ÔÊ§°Ü====" << endl;
+				cout << "=====åˆ›å»ºæ–°å¥½å‹å¯¹å¤±è´¥====" << endl;
 				mysql_close(&mydata);
 				return -1;
 			}
 		}
 		else
 		{
-			cout << "=====ÄãÃÇÒÑ¾­ÊÇºÃÓÑÁË=====";
+			cout << "=====ä½ ä»¬å·²ç»æ˜¯å¥½å‹äº†=====";
 			return -3;
 		}
 
 	}
 	else if(mysql_query(&mydata, sqlstr_c.c_str()) != 0){
-		cout << "ÓÃ»§" << user2name <<"²»´æÔÚ."<< endl;
+		cout << "ç”¨æˆ·" << user2name <<"ä¸å­˜åœ¨."<< endl;
 		cout<< mysql_error(&mydata);
 		mysql_close(&mydata);
 		return -4;
 	}
 	else{
-		cout << "ÓÃ»§ÑéÖ¤Ê§°Ü" << endl;
+		cout << "ç”¨æˆ·éªŒè¯å¤±è´¥" << endl;
 		cout << mysql_error(&mydata);
 		mysql_close(&mydata);
 		return -2;
