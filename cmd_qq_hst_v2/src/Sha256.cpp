@@ -1,3 +1,7 @@
+/*
+*@Discription 密码加密   
+*@Author tong
+*/
 #define _CRT_SECURE_NO_WARNINGS
 #include"Sha256.h"
 
